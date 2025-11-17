@@ -44,7 +44,7 @@ def plot_confidence_histogram(sent_df):
 if df is not None:
     if st.button("Run Feature Specific Analysis"):
         with st.spinner("Running sentiment analysis..."):
-            result_df = analyze_sentiment(df, text_column="cleaned_content")
+            result_df, summary_df = analyze_sentiment(df, text_column="cleaned_content")
 
         st.success("Analysis complete!")
 
@@ -52,7 +52,8 @@ if df is not None:
         plot_confidence_histogram(result_df)
 
         st.subheader("Feature-Level Sentiment Summary")
-        summary = result_df.groupby("bucket")["label"].value_counts().unstack(fill_value=0)
+
+        summary = result_df.groupby("feature")["sentiment"].value_counts().unstack(fill_value=0)
         st.dataframe(summary)
 
         st.subheader("Sentiment Scores by Feature")
