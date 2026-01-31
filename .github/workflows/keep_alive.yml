@@ -1,0 +1,14 @@
+name: App Heartbeat
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit App
+        run: |
+          curl -I https://reviewsentimentanalyzer.streamlit.app/
